@@ -22,9 +22,11 @@ function download (host, file, port)
                 io.flush()
                 count = count + string.len(overflow)
             end
-            if status == "closed" then break end
-                lastStatus=status
+            if status == "closed" then 
+                break 
             end
+            lastStatus=status
+        end
         myConnection:close()
         print(file, count)
     else

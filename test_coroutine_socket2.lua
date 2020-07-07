@@ -1,4 +1,5 @@
 -- https://gist.github.com/ichenq/5885298
+-- https://www.lua.org/pil/9.4.html
 local socket = require('socket')
 
 local threads = {}
