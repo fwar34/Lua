@@ -1,3 +1,4 @@
+-- http://jsrun.net/square/search?s=lua
 Event = {}
 
 function Event:new(event)
@@ -50,16 +51,43 @@ function Event:dispatchEvent(eventType, ...)
     end
 end
 
-A = {}
+A = {} -- table A
+B = {} -- table B
 
 function A:a()
     local event = Event:Instance()
+    -- 这里的self是table A
     event:addEventListener(self, 'eat', 'getName')
 end
 
-function A:getName()
-    print('aaaaaaaaaaaaaaaaaaaaa')
+function A:b()
+    local event = Event:Instance()
+    -- 这里的self是table A，所以eat成了A的getName2
+    event:addEventListener(self, 'eat', 'getName2')
 end
+
+function A:getName2()
+    print('A getName2 execute...')
+end
+
+function B:getName()
+    print('B getName execute...')
+end
+
+function A:getName()
+    print('A getName execute...')
+end
+
+function B:a()
+    local event = Event:Instance()
+    -- 这里的self是table B
+    event:addEventListener(self, 'eat', 'getName')
+end
+
+-- Event._listeners = {
+-- 'eat' = {A = A:getName2, B = B:getName}
+-- }
+
 
 function A:set()
     local event = Event:Instance()
@@ -67,4 +95,6 @@ function A:set()
 end
 
 A:a()
+A:b()
+B:a()
 A:set()
