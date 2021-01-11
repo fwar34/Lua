@@ -84,6 +84,7 @@ function B:a()
     event:addEventListener(self, 'eat', 'getName')
 end
 
+-- 最终生成的table类似下面的样子
 -- Event._listeners = {
 -- 'eat' = {A = A:getName2, B = B:getName}
 -- }
