@@ -1,0 +1,17 @@
+[
+    {
+        "name": "NoActive-焦点",
+        "description": "应用进入后台冻结进程",
+        "priority": -1,
+        "condition": "frontPkgChanged",
+        "actions": [
+            "if(thanos.getActivityManager().isPkgSmartStandByEnabled(to)){su.exe(\"kill -CONT `pgrep -f \"+ to + \"`\");su.exe(\"appops set \" +to + \" WAKE_LOCK default\")}",
+            "if(!thanos.getActivityManager().isPkgSmartStandByEnabled(from)){break}",
+            "if(globalVarOf$blackApps==null || !globalVarOf$blackApps.contains(from)){break};",
+            "if(su.exe(\"dumpsys audio|grep client:|grep -v died|cut -d ' ' -f 6\").out.contains(from)){break}",
+            "su.exe(\"appops set \" + from + \" WAKE_LOCK ignore\");",
+            "Thread.sleep(2000);",
+            "if(activity.getFrontAppPackage()!=from && !thanos.windowManager.hasVisibleWindows(from)){su.exe(\"kill -STOP `pgrep -f \"+ from +\"`\")};"
+        ]
+    }
+]
